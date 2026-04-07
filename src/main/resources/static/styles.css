@@ -1,0 +1,22 @@
+.columns {
+    display: flex;
+}
+
+.top-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-column {
+    width: 20%;
+}
+
+.center-column {
+    width: 60%;
+}
+
+.right-column {
+    width: 20%;
+}
