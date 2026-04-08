@@ -1,22 +1,105 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
 .columns {
     display: flex;
+    min-height: 100vh;
 }
 
 .top-bar {
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #fff;
+    border-bottom: 0.5px solid #ddd;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    z-index: 100;
 }
 
 .left-column {
-    width: 20%;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 72px;
+    /* narrow icon-only sidebar */
+    height: calc(100vh - 60px);
+    width: 120px;
+    background: #fff;
+    border-right: 0.5px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+    z-index: 50;
+}
+
+.nav-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
 }
 
 .center-column {
-    width: 60%;
+    /* offset exactly the sidebar width */
+    margin-left: 72px;
+    flex: 1;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+    /* scrollable feed */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+    gap: 12px;
 }
 
-.right-column {
-    width: 20%;
+.textarea-multiline {
+    width: 100%;
+    resize: none;
+    border: 0.5px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.demo-tekstilaatikko {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+}
+
+#homeButton {
+    font-size: 5rem;
+}
+
+#profileButton {
+    font-size: 5rem;
+}
+
+#newPostButton {
+    font-size: 5rem;
+}
+
+#settingsButton {
+    font-size: 5rem;
+}
+
+#logoutButton {
+    /* sticks to the bottom */
+    margin-top: auto;
+    margin-bottom: 4px;
+    font-size: 5rem;
 }
