@@ -82,22 +82,37 @@ body {
 }
 
 #homeButton {
+    /* TODO:
+        Change border to none
+        Change that cursor changes to clickable icon
+    */
+}
+
+#homeButton {
+    /* TODO:
+        Change border to none
+        Change that cursor changes to clickable icon
+    */
+}
+
+#homeIcon {
     font-size: 5rem;
 }
 
-#profileButton {
+#profileIcon {
     font-size: 5rem;
 }
 
-#newPostButton {
+#newPostIcon {
     font-size: 5rem;
 }
 
-#settingsButton {
+#settingsIcon {
+    margin-top: auto;
     font-size: 5rem;
 }
 
-#logoutButton {
+#logoutIcon {
     /* sticks to the bottom */
     margin-top: auto;
     margin-bottom: 4px;

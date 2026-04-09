@@ -35,4 +35,9 @@ public class Ohjelmointi4ProjectApplication {
 		}
 		return "<p>" + text + "</p>";
 	}
+
+	@GetMapping("/profilepage")
+	public String getProfilePage() {
+		return "profilepage.html";
+	}
 }
