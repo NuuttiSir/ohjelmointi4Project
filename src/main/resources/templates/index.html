@@ -30,12 +30,25 @@
                     </button>
                 </a>
                 <br>
-                <i class="bi bi-plus-circle" id="newPostIcon"></i>
+                <a>
+                    <button type="button" class="newPostButton">
+                        <i class="bi bi-plus-circle" id="newPostIcon"></i>
+                    </button>
+                </a>
                 <br>
                 <br>
             </div>
-            <i class="bi bi-gear-fill" id="settingsIcon"></i>
-            <i class="bi bi-box-arrow-right" id="logoutIcon"></i>
+
+            <a href="settingspage.html">
+                <button type="button" class="settingsButton">
+                    <i class="bi bi-gear-fill" id="settingsIcon"></i>
+                </button>
+            </a>
+            <a>
+                <button type="button" class="logoutButton">
+                    <i class="bi bi-box-arrow-right" id="logoutIcon"></i>
+                </button>
+            </a>
         </div>
 
         <div class="center-column">
@@ -43,7 +56,7 @@
                 <div class="demo-tekstilaatikko">
                     <textarea class="textarea-multiline" id="demo-multi-string" rows="3" placeholder="Text"
                         name="demo-multi-string" maxlength="140">
-                                    </textarea>
+                    </textarea>
                 </div>
                 <button type="button" class="submit" hx-post="/preview" hx-swap="beforeend" hx-target="#preview"
                     hx-include="#demo-multi-string"

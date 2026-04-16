@@ -88,7 +88,14 @@ body {
     */
 }
 
-#homeButton {
+#profileButton {
+    /* TODO:
+        Change border to none
+        Change that cursor changes to clickable icon
+    */
+}
+
+#settingsButton {
     /* TODO:
         Change border to none
         Change that cursor changes to clickable icon

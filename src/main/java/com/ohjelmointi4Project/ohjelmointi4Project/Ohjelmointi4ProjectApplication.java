@@ -14,30 +14,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class Ohjelmointi4ProjectApplication {
 
-	private final DatabaseConf db = new DatabaseConf();
+    private final DatabaseConf db = new DatabaseConf();
 
-	public static void main(String[] args) {
-		SpringApplication.run(Ohjelmointi4ProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Ohjelmointi4ProjectApplication.class, args);
+    }
 
-	@GetMapping("/")
-	public String frontPage() {
-		return "index.html";
-	}
+    @GetMapping("/")
+    public String frontPage() {
+        return "index.html";
+    }
 
-	@PostMapping("/preview")
-	@ResponseBody
-	public String inputtedTextToShow(@RequestParam(value = "demo-multi-string", defaultValue = "") String text) {
-		try {
-			db.insertMessage(text);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return "<p>" + text + "</p>";
-	}
+    @PostMapping("/preview")
+    @ResponseBody
+    public String inputtedTextToShow(@RequestParam(value = "demo-multi-string", defaultValue = "") String text) {
+        try {
+            db.insertMessage(text);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "<p>" + text + "</p>";
+    }
 
-	@GetMapping("/profilepage")
-	public String getProfilePage() {
-		return "profilepage.html";
-	}
+    @GetMapping("/profilepage")
+    public String getProfilePage() {
+        return "profilepage.html";
+    }
+
+    @GetMapping("/settingspage")
+    public String getSettingsPage() {
+        return "settingspage.html";
+    }
 }
