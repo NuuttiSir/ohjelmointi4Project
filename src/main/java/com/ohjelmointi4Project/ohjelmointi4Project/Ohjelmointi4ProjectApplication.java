@@ -45,4 +45,21 @@ public class Ohjelmointi4ProjectApplication {
     public String getSettingsPage() {
         return "settingspage.html";
     }
+
+    @GetMapping("/signup")
+    public String signupPage() {
+        return "signup.html";
+    }
+
+    @PostMapping("/checkSignup")
+    @ResponseBody
+    public String checkSignup(@RequestParam(value = "signup", defaultValue = "") String username, String email,
+            String password) {
+        try {
+            db.insertUser(username, password, email);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "onnistui";
+    }
 }

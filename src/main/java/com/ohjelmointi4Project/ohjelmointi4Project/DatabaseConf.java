@@ -48,10 +48,24 @@ public class DatabaseConf {
                         CREATE table messages(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             message varchar(140)
+                            like_count integer,
+                            comment_count integer,
+                            creator TEXT,
+                            created_at INTEGER
                         )
                         """;
 
+                // TODO: lisaa created_at users tableen as timestamp integer whatever
+                String createUsersTable = """
+                        CREATE table users(
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                username varchar(64) NOT NULL,
+                                email varchar(128) NOT NULL,
+                                password varchar(32) NOT NULL,
+                        )
+                        """;
                 createStatement.executeUpdate(createMessagesTable);
+                createStatement.executeUpdate(createUsersTable);
             }
         } else {
             System.out.println("Database already exists at: " + dbPath);
@@ -69,6 +83,19 @@ public class DatabaseConf {
                 ps.executeUpdate();
             }
 
+            dbConn.commit();
+        }
+    }
+
+    public void insertUser(String username, String password, String email) throws SQLException {
+        String insertUser = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        try (Connection dbConn = getConnection()) {
+            dbConn.setAutoCommit(false);
+            try (PreparedStatement ps = dbConn.prepareStatement(insertUser)) {
+                ps.setString(0, username);
+                ps.setString(1, email);
+                ps.setString(2, password);
+            }
             dbConn.commit();
         }
     }
