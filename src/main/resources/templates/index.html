@@ -33,13 +33,13 @@
                         <i class="bi bi-plus-circle" id="newPostIcon"></i>
                     </button>
                     
-                    <div class="new-post-popup" id="newPostPopup">
-                        <textarea class="textarea-multiline" rows="4" placeholder="Uusi julkaisu"></textarea>
+                    <div class="popup" id="newPostPopup">
+                        <textarea class="textarea-multiline" id="postTextarea" rows="4" placeholder="Uusi julkaisu"></textarea>
                         <p>Max 140 merkkiä</p>
 
                         <div class="button-group">
-                            <button>Peruuta</button>
-                            <button>Julkaise</button>
+                            <button onclick="toggleNewPost()">Peruuta</button>
+                            <button onclick="submitPost()">Julkaise</button>
                         </div>
                     </div>
                 </a>
@@ -58,8 +58,15 @@
                 </a>
             </div>
         </div>
+        
+        <div class="center-column">
+            <div class="post-box">
+                <strong>Username</strong>
+                <p>Post content</p>
+            </div>
+        </div>
 
-        <!--
+        <!-- JULKAISUT DEMO
         <div class="center-column">
             <div class="text-input">
                 <div class="demo-tekstilaatikko">
@@ -77,21 +84,24 @@
                 <div id="preview"></div>
             </div>
         </div>
-        -->
+    -->
+        
         <script>
             function toggleNewPost() {
                 const popup = document.getElementById('newPostPopup');
                 popup.classList.toggle('open');
             }
+            
+            function submitPost() {
+                const text = document.getElementById('postTextarea').value.trim();
+                if (text === '') return;
 
-            // close if user clicks outside the popup
-            document.addEventListener('click', function(e) {
-                const popup = document.getElementById('newPostPopup');
-                const btn = document.querySelector('.newPostButton');
-                if (!popup.contains(e.target) && !btn.contains(e.target)) {
-                    popup.classList.remove('open');
-                }
-            });
+                document.querySelector('.center-column').insertAdjacentHTML('afterbegin',
+                '<div class="post-box"><strong>Username</strong><p>' + text + '</p></div>');
+
+                document.getElementById('postTextarea').value = '';
+                toggleNewPost();
+            }
         </script>
     </body>
 

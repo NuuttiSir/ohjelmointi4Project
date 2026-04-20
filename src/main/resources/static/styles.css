@@ -62,20 +62,49 @@ button {
 
 .center-column {
     /* offset exactly the sidebar width */
-    margin-left: 72px;
+    margin-left: 120px;
+    padding-top: 160px;
+    padding-left: 20px;
     flex: 1;
-    height: calc(100vh - 60px);
     overflow-y: auto;
     /* scrollable feed */
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px 16px 40px;
     gap: 12px;
+}
+
+.post-box {
+    width: 100%;
+    max-width: 1200px;
+    background: white;
+    border: 0.5px solid white;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+
+/* TODO julkaisun linkittäminen */
+.popup {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .textarea-multiline {
     width: 100%;
+    box-sizing: border-box;
     resize: none;
     border: 0.5px solid #ddd;
     border-radius: 10px;
@@ -85,31 +114,6 @@ button {
     background: #fafafa;
     outline: none;
     transition: border-color 0.15s;
-}
-
-.demo-tekstilaatikko {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 180px;
-}
-
-.new-post-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    background: white;
-    border: 0.5px solid white;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-    z-index: 200;
-    display: none;
-    flex-direction: column;
-    gap: 5px;
 }
 
 .button-cancel {
@@ -129,8 +133,8 @@ button {
     gap: 8px;
 }
 
-.new-post-popup.open {
-    display: flex;
+.popup.open {
+    visibility: visible;
 }
 
 #homeButton {
