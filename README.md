@@ -12,4 +12,4 @@ To run the server
 ## Linux:
     ./mvnw spring-boot:run  -> Then navigate to localhost:8080
 ## Windows
-    NO IDEA, i guess just run the mvnw.cmd -> Then navigate to localhost:8080
+    mvnw.cmd spring-boot:run -> Then navigate to http://localhost:8080
