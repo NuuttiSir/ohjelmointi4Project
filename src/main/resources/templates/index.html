@@ -58,11 +58,6 @@
                         name="demo-multi-string" maxlength="140">
                     </textarea>
                 </div>
-                <button type="button" class="submit" hx-post="/preview" hx-swap="beforeend" hx-target="#preview"
-                    hx-include="#demo-multi-string"
-                    hx-on::after-request="document.getElementById('demo-multi-string').value = ''">
-                    SUBMIT
-                </button>
             </div>
             <div class="feed">
                 <div id="preview"></div>

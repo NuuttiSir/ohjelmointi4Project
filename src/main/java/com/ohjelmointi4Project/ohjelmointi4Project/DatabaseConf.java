@@ -23,7 +23,7 @@ public class DatabaseConf {
 
     @PostConstruct
     private void init() {
-        this.dbPath = env.getProperty("db.path");
+        DatabaseConf.dbPath = env.getProperty("db.path");
         try {
             initDB();
         } catch (SQLException e) {
@@ -47,7 +47,7 @@ public class DatabaseConf {
                 String createMessagesTable = """
                         CREATE table messages(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            message varchar(140)
+                            message varchar(140),
                             like_count integer,
                             comment_count integer,
                             creator TEXT,
