@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class Ohjelmointi4ProjectApplication {
 
-    private final DatabaseConf db = new DatabaseConf();
+    private final DatabaseConf db;
+
+    public Ohjelmointi4ProjectApplication(DatabaseConf db) {
+        this.db = db;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Ohjelmointi4ProjectApplication.class, args);
@@ -52,14 +56,11 @@ public class Ohjelmointi4ProjectApplication {
     }
 
     @PostMapping("/checkSignup")
-    @ResponseBody
-    public String checkSignup(@RequestParam(value = "signup", defaultValue = "") String username, String email,
-            String password) {
-        try {
-            db.insertUser(username, password, email);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "onnistui";
+    public String checkSignup(
+            @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String password) throws SQLException {
+        db.insertUser(username, password, email);
+        return "redirect:/";
     }
 }

@@ -50,8 +50,9 @@ public class DatabaseConf {
                             message varchar(140),
                             like_count integer,
                             comment_count integer,
-                            creator TEXT,
-                            created_at INTEGER
+                            user_id INTEGER,
+                            created_at INTEGER,
+                            FOREIGN KEY (user_id) REFERENCES users(id)
                         )
                         """;
 
@@ -59,9 +60,9 @@ public class DatabaseConf {
                 String createUsersTable = """
                         CREATE table users(
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                username varchar(64) NOT NULL,
-                                email varchar(128) NOT NULL,
-                                password varchar(32) NOT NULL,
+                                        username varchar(64) NOT NULL UNIQUE,
+                                email varchar(128) NOT NULL UNIQUE,
+                                password varchar(32) NOT NULL
                         )
                         """;
                 createStatement.executeUpdate(createMessagesTable);
@@ -92,9 +93,10 @@ public class DatabaseConf {
         try (Connection dbConn = getConnection()) {
             dbConn.setAutoCommit(false);
             try (PreparedStatement ps = dbConn.prepareStatement(insertUser)) {
-                ps.setString(0, username);
-                ps.setString(1, email);
-                ps.setString(2, password);
+                ps.setString(1, username);
+                ps.setString(2, email);
+                ps.setString(3, password);
+                ps.executeUpdate();
             }
             dbConn.commit();
         }
