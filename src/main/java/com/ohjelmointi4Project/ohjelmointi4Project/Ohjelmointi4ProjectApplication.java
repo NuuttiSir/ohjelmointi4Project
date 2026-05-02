@@ -14,7 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class Ohjelmointi4ProjectApplication {
 
-    private final DatabaseConf db = new DatabaseConf();
+    private final DatabaseConf db;
+    private final UserHandling userHandling;
+
+    public Ohjelmointi4ProjectApplication(DatabaseConf db, UserHandling userHandling) {
+        this.db = db;
+        this.userHandling = userHandling;
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Ohjelmointi4ProjectApplication.class, args);
@@ -45,4 +51,25 @@ public class Ohjelmointi4ProjectApplication {
     public String getSettingsPage() {
         return "settingspage.html";
     }
+
+    @GetMapping("/signup")
+    public String signupPage() {
+        return "signup.html";
+    }
+
+    @PostMapping("/checkSignup")
+    public String checkSignup(
+            @RequestParam String username,
+            @RequestParam String email,
+            @RequestParam String password) throws SQLException {
+
+        try {
+            userHandling.signup(username, email, password);
+            return "redirect:/";
+        } catch (Exception e) {
+            return "redirect:/signup";
+        }
+    }
+
+    // TODO: signin
 }

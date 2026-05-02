@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -23,7 +24,7 @@ public class DatabaseConf {
 
     @PostConstruct
     private void init() {
-        this.dbPath = env.getProperty("db.path");
+        DatabaseConf.dbPath = env.getProperty("db.path");
         try {
             initDB();
         } catch (SQLException e) {
@@ -47,11 +48,26 @@ public class DatabaseConf {
                 String createMessagesTable = """
                         CREATE table messages(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            message varchar(140)
+                            message varchar(140),
+                            like_count integer,
+                            comment_count integer,
+                            user_id INTEGER,
+                            created_at INTEGER,
+                            FOREIGN KEY (user_id) REFERENCES users(id)
                         )
                         """;
 
+                // TODO: lisaa created_at users tableen as timestamp integer whatever
+                String createUsersTable = """
+                        CREATE table users(
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        username varchar(64) NOT NULL UNIQUE,
+                                email varchar(128) NOT NULL UNIQUE,
+                                password varchar(32) NOT NULL
+                        )
+                        """;
                 createStatement.executeUpdate(createMessagesTable);
+                createStatement.executeUpdate(createUsersTable);
             }
         } else {
             System.out.println("Database already exists at: " + dbPath);
@@ -70,6 +86,53 @@ public class DatabaseConf {
             }
 
             dbConn.commit();
+        }
+    }
+
+    public void insertUser(String username, String password, String email) throws SQLException {
+        String insertUser = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        try (Connection dbConn = getConnection()) {
+            dbConn.setAutoCommit(false);
+            try (PreparedStatement ps = dbConn.prepareStatement(insertUser)) {
+                ps.setString(1, username);
+                ps.setString(2, email);
+                ps.setString(3, password);
+                ps.executeUpdate();
+            }
+            dbConn.commit();
+        }
+    }
+
+    public boolean usernameExists(String username) throws SQLException {
+        String sql = "SELECT 1 FROM users WHERE username = ? LIMIT 1";
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean emailExists(String email) throws SQLException {
+        String sql = "SELECT 1 FROM users WHERE email = ? LIMIT 1";
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public String getPasswordHashByUsername(String username) throws SQLException {
+        String sql = "SELECT password FROM users WHERE username = ?";
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString("password") : null;
+            }
         }
     }
 }
