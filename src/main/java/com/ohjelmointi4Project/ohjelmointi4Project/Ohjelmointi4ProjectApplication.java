@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class Ohjelmointi4ProjectApplication {
 
     private final DatabaseConf db;
+    private final UserHandling userHandling;
 
-    public Ohjelmointi4ProjectApplication(DatabaseConf db) {
+    public Ohjelmointi4ProjectApplication(DatabaseConf db, UserHandling userHandling) {
         this.db = db;
+        this.userHandling = userHandling;
     }
 
     public static void main(String[] args) {
@@ -60,7 +62,14 @@ public class Ohjelmointi4ProjectApplication {
             @RequestParam String username,
             @RequestParam String email,
             @RequestParam String password) throws SQLException {
-        db.insertUser(username, password, email);
-        return "redirect:/";
+
+        try {
+            userHandling.signup(username, email, password);
+            return "redirect:/";
+        } catch (Exception e) {
+            return "redirect:/signup";
+        }
     }
+
+    // TODO: signin
 }

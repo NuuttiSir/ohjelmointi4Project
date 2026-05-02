@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -99,6 +100,39 @@ public class DatabaseConf {
                 ps.executeUpdate();
             }
             dbConn.commit();
+        }
+    }
+
+    public boolean usernameExists(String username) throws SQLException {
+        String sql = "SELECT 1 FROM users WHERE username = ? LIMIT 1";
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean emailExists(String email) throws SQLException {
+        String sql = "SELECT 1 FROM users WHERE email = ? LIMIT 1";
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public String getPasswordHashByUsername(String username) throws SQLException {
+        String sql = "SELECT password FROM users WHERE username = ?";
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString("password") : null;
+            }
         }
     }
 }
