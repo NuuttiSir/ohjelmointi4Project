@@ -58,6 +58,11 @@ public class Ohjelmointi4ProjectApplication {
         return "signup.html";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        return "login.html";
+    }
+
     @PostMapping("/checkSignup")
     public String checkSignup(
             @RequestParam String username,
@@ -72,5 +77,13 @@ public class Ohjelmointi4ProjectApplication {
         }
     }
 
-    // TODO: signin
+    @PostMapping("/checkLogin")
+    public String checkLogin(@RequestParam String username, @RequestParam String password) throws SQLException {
+        try {
+            userHandling.login(username, password);
+            return "redirect:/";
+        } catch (Exception e) {
+            return "redirect:/login";
+        }
+    }
 }
