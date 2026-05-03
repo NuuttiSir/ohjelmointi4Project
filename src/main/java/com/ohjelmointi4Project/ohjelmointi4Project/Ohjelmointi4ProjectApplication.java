@@ -33,13 +33,14 @@ public class Ohjelmointi4ProjectApplication {
 
     @PostMapping("/preview")
     @ResponseBody
-    public String inputtedTextToShow(@RequestParam(value = "demo-multi-string", defaultValue = "") String text) {
+    public String inputtedTextToShow(@RequestParam(value = "demo-multi-string", defaultValue = "") String text,
+            String username) {
         try {
-            db.insertMessage(text);
+            db.insertMessage(text, username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return "<p>" + text + "</p>";
+        return "<div class=\"post-box\"><strong>" + username + "</strong><p>" + text + "</p></div>";
     }
 
     @GetMapping("/profilepage")

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -45,6 +46,15 @@ public class DatabaseConf {
             try (Connection dbConn = getConnection();
                     Statement createStatement = dbConn.createStatement()) {
 
+                // TODO: lisaa created_at users tableen as timestamp integer whatever
+                String createUsersTable = """
+                        CREATE table users(
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                        username varchar(64) NOT NULL UNIQUE,
+                                email varchar(128) NOT NULL UNIQUE,
+                                password varchar(32) NOT NULL
+                        )
+                        """;
                 String createMessagesTable = """
                         CREATE table messages(
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,15 +67,6 @@ public class DatabaseConf {
                         )
                         """;
 
-                // TODO: lisaa created_at users tableen as timestamp integer whatever
-                String createUsersTable = """
-                        CREATE table users(
-                                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                        username varchar(64) NOT NULL UNIQUE,
-                                email varchar(128) NOT NULL UNIQUE,
-                                password varchar(32) NOT NULL
-                        )
-                        """;
                 createStatement.executeUpdate(createMessagesTable);
                 createStatement.executeUpdate(createUsersTable);
             }
@@ -74,14 +75,29 @@ public class DatabaseConf {
         }
     }
 
-    public void insertMessage(String text) throws SQLException {
+    public void insertMessage(String text, String username) throws SQLException {
+        int user_id = 0;
+        long now = Instant.now().toEpochMilli();
+
+        // TODO: Pitaa loytaa username user id yhteys ja lisata user_id
+        String findUserID = """
+                    SELECT id FROM users WHERE username = ?
+                """;
+
         String insertMessage = """
-                INSERT INTO messages (message) VALUES (?) """;
+                INSERT INTO messages (message, user_id, created_at) VALUES (?, ?, ?) """;
 
         try (Connection dbConn = getConnection()) {
             dbConn.setAutoCommit(false);
+            try (PreparedStatement ps0 = dbConn.prepareStatement(findUserID)) {
+                try (ResultSet rs = ps0.executeQuery()) {
+                    user_id = rs.getInt("id");
+                }
+            }
             try (PreparedStatement ps = dbConn.prepareStatement(insertMessage)) {
                 ps.setString(1, text);
+                ps.setInt(2, user_id);
+                ps.setLong(3, now);
                 ps.executeUpdate();
             }
 

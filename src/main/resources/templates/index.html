@@ -32,15 +32,22 @@
                     <button type="button" class="newPostButton" onclick="toggleNewPost()">
                         <i class="bi bi-plus-circle" id="newPostIcon"></i>
                     </button>
-                    
-                    <div class="popup" id="newPostPopup">
-                        <textarea class="textarea-multiline" id="postTextarea" rows="4" placeholder="Uusi julkaisu"></textarea>
-                        <p>Max 140 merkkiä</p>
 
-                        <div class="button-group">
-                            <button onclick="toggleNewPost()">Peruuta</button>
-                            <button onclick="submitPost()">Julkaise</button>
-                        </div>
+                    <div class="popup" id="newPostPopup">
+                        <form hx-post="/preview" hx-target=".center-column" hx-swap="afterbegin"
+                            hx-on::after-request="if(event.detail.successful){ this.reset(); toggleNewPost(); }">
+
+                            <!-- TODO: Vaihda name johonkin kuvaavampaan tassa ja css filussa -->
+                            <textarea class="textarea-multiline" id="postTextarea" name="demo-multi-string" rows="4"
+                                placeholder="Uusi julkaisu" maxlength="140" required></textarea>
+
+                            <p>Max 140 merkkiä</p>
+
+                            <div class="button-group">
+                                <button type="button" onclick="toggleNewPost()">Peruuta</button>
+                                <button type="submit">Julkaise</button>
+                            </div>
+                        </form>
                     </div>
                 </a>
             </div>
@@ -58,7 +65,7 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="center-column">
             <div class="post-box">
                 <strong>Username</strong>
@@ -80,24 +87,24 @@
             </div>
         </div>
     -->
-        
+
         <script>
             function toggleNewPost() {
                 const popup = document.getElementById('newPostPopup');
                 popup.classList.toggle('open');
             }
-            
-            function submitPost() {
-                const text = document.getElementById('postTextarea').value.trim();
-                if (text === '') return;
 
-                document.querySelector('.center-column').insertAdjacentHTML('afterbegin',
-                '<div class="post-box"><strong>Username</strong><p>' + text + '</p></div>');
+            // function submitPost() {
+            //     const text = document.getElementById('postTextarea').value.trim();
+            //     if (text === '') return;
 
-                document.getElementById('postTextarea').value = '';
-                toggleNewPost();
-            }
+            //     document.querySelector('.center-column').insertAdjacentHTML('afterbegin',
+            //     '<div class="post-box"><strong>Username</strong><p>' + text + '</p></div>');
+
+            //     document.getElementById('postTextarea').value = '';
+            //     toggleNewPost();
+            // }
         </script>
-    </body>
+</body>
 
 </html>
