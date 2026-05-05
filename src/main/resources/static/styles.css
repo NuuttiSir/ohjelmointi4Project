@@ -181,3 +181,33 @@ button {
     margin-bottom: 4px;
     font-size: 5rem;
 }
+
+.login-page .center-column,
+.signup-page .center-column {
+    margin-left: 0;
+    padding-top: 160px;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    flex: 1;
+}
+
+.login-page form,
+.signup-page form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+}
+
+.login-page form input,
+.login-page form button,
+.signup-page form input,
+.signup-page form button {
+    width: 100%;
+    box-sizing: border-box;
+}
