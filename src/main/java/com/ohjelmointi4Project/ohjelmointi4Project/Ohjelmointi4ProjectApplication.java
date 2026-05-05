@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpSession;
+
 @SpringBootApplication
 @Controller
 public class Ohjelmointi4ProjectApplication {
@@ -28,7 +30,23 @@ public class Ohjelmointi4ProjectApplication {
 
     @GetMapping("/")
     public String frontPage() {
+        List<Post> posts = db.getAllPosts();
+        for (Post post : posts) {
+            // Return div bnox with username and the post
+            break;
+        }
         return "index.html";
+    }
+
+    @PostMapping("/posts")
+    @ResponseBody
+    public String createPost(@RequestParam("content") String content, HttpSession session) {
+        String username = session.getAttribute("username");
+        if (username == null) {
+            return "Not loggred in";
+        }
+        db.insertMessage(content, username);
+        return "<div class='post-box'><strong>" + username + "</strong><p>" + content + "</p></div>";
     }
 
     @PostMapping("/preview")

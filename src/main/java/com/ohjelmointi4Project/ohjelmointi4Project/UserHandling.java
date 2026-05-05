@@ -61,6 +61,12 @@ public class UserHandling {
         }
         String hash = hashPassword(password);
         // TODO: Get db password hash and compare
+        if (hash.equals(db.getUsernamePasswordHash())) {
+            session.setAttribute("username", username);
+            redirectTo /
+        } else {
+         // TODO: error handling   
+        }
     }
 
     public boolean authenticateUser(String username, String password) throws SQLException {
