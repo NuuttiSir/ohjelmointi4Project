@@ -1,6 +1,10 @@
 # ohjelmointi4 Project
 Small social plaform where you can send short messges and see other users messages
 
+# Languages used
+- Java
+- Javasript + HTML + CSS
+
 # Libraries used
 - Spring Boot   https://spring.io/projects/spring-boot
 - HTMX          https://htmx.org/

@@ -26,6 +26,15 @@ public class UserHandling {
         }
     }
 
+    public void validateUserInfo(String username, String password) {
+        if (username == null || username.isBlank() || username.length() > 64) {
+            throw new IllegalArgumentException("Invalid username");
+        }
+        if (password == null || password.length() < 8) {
+            throw new IllegalArgumentException("Password must be at least 8 characters");
+        }
+    }
+
     public String hashPassword(String password) {
         return Crypt.crypt(password);
     }
@@ -42,6 +51,22 @@ public class UserHandling {
 
         String hash = hashPassword(password);
         db.insertUser(username, hash, email);
+    }
+
+    public void login(String username, String password) throws SQLException {
+        validateUserInfo(username, password);
+
+        if (db.usernameExists(username)) {
+            throw new IllegalArgumentException("Username already exits");
+        }
+        String hash = hashPassword(password);
+        // TODO: Get db password hash and compare
+        if (hash.equals(db.getUsernamePasswordHash())) {
+            session.setAttribute("username", username);
+            redirectTo /
+        } else {
+         // TODO: error handling   
+        }
     }
 
     public boolean authenticateUser(String username, String password) throws SQLException {
