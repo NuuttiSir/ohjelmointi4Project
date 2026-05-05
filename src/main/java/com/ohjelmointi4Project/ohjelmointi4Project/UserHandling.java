@@ -53,21 +53,21 @@ public class UserHandling {
         db.insertUser(username, hash, email);
     }
 
-    public void login(String username, String password) throws SQLException {
-        validateUserInfo(username, password);
+    // public void login(String username, String password) throws SQLException {
+    // validateUserInfo(username, password);
 
-        if (db.usernameExists(username)) {
-            throw new IllegalArgumentException("Username already exits");
-        }
-        String hash = hashPassword(password);
-        // TODO: Get db password hash and compare
-        if (hash.equals(db.getUsernamePasswordHash())) {
-            session.setAttribute("username", username);
-            redirectTo /
-        } else {
-         // TODO: error handling   
-        }
-    }
+    // if (db.usernameExists(username)) {
+    // throw new IllegalArgumentException("Username already exits");
+    // }
+    // String hash = hashPassword(password);
+    // // TODO: Get db password hash and compare
+    // if (hash.equals(db.getUsernamePasswordHash())) {
+    // session.setAttribute("username", username);
+    // redirectTo /
+    // } else {
+    // // TODO: error handling
+    // }
+    // }
 
     public boolean authenticateUser(String username, String password) throws SQLException {
         if (username == null || password == null)

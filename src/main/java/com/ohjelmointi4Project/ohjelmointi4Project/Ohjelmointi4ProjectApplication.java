@@ -1,10 +1,12 @@
 package com.ohjelmointi4Project.ohjelmointi4Project;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,37 +31,40 @@ public class Ohjelmointi4ProjectApplication {
     }
 
     @GetMapping("/")
-    public String frontPage() {
+    public String frontPage(Model model) throws SQLException {
         List<Post> posts = db.getAllPosts();
-        for (Post post : posts) {
-            // Return div bnox with username and the post
-            break;
-        }
+        model.addAttribute("posts", posts);
         return "index.html";
     }
 
     @PostMapping("/posts")
     @ResponseBody
     public String createPost(@RequestParam("content") String content, HttpSession session) {
-        String username = session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
         if (username == null) {
-            return "Not loggred in";
+            return "Not logged in";
         }
-        db.insertMessage(content, username);
-        return "<div class='post-box'><strong>" + username + "</strong><p>" + content + "</p></div>";
+        try {
+            db.insertMessage(content, username);
+            return "<div class='post-box'><strong>" + username + "</strong><p>" + content + "</p></div>";
+        } catch (SQLException e) {
+            return "DB error";
+        }
     }
 
-    @PostMapping("/preview")
-    @ResponseBody
-    public String inputtedTextToShow(@RequestParam(value = "demo-multi-string", defaultValue = "") String text,
-            String username) {
-        try {
-            db.insertMessage(text, username);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return "<div class=\"post-box\"><strong>" + username + "</strong><p>" + text + "</p></div>";
-    }
+    // @PostMapping("/preview")
+    // @ResponseBody
+    // public String inputtedTextToShow(@RequestParam(value = "demo-multi-string",
+    // defaultValue = "") String text,
+    // String username) {
+    // try {
+    // db.insertMessage(text, username);
+    // } catch (SQLException e) {
+    // e.printStackTrace();
+    // }
+    // return "<div class=\"post-box\"><strong>" + username + "</strong><p>" + text
+    // + "</p></div>";
+    // }
 
     @GetMapping("/profilepage")
     public String getProfilePage() {
@@ -77,7 +82,13 @@ public class Ohjelmointi4ProjectApplication {
     }
 
     @GetMapping("/logout")
-    public String logout() {
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "login.html";
+    }
+
+    @GetMapping("/login")
+    public String login(HttpSession session) {
         return "login.html";
     }
 
@@ -96,10 +107,15 @@ public class Ohjelmointi4ProjectApplication {
     }
 
     @PostMapping("/checkLogin")
-    public String checkLogin(@RequestParam String username, @RequestParam String password) throws SQLException {
+    public String checkLogin(@RequestParam String username, @RequestParam String password, HttpSession session)
+            throws SQLException {
         try {
-            userHandling.login(username, password);
-            return "redirect:/";
+            if (userHandling.authenticateUser(username, password)) {
+                session.setAttribute("username", username);
+                return "redirect:/";
+            } else {
+                return "redirect:/login";
+            }
         } catch (Exception e) {
             return "redirect:/login";
         }

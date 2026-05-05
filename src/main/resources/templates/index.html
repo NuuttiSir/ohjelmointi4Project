@@ -34,11 +34,11 @@
                     </button>
 
                     <div class="popup" id="newPostPopup">
-                        <form hx-post="/preview" hx-target=".center-column" hx-swap="afterbegin"
+                        <form hx-post="/posts" hx-target=".center-column" hx-swap="afterbegin"
                             hx-on::after-request="if(event.detail.successful){ this.reset(); toggleNewPost(); }">
 
                             <!-- TODO: Vaihda name johonkin kuvaavampaan tassa ja css filussa -->
-                            <textarea class="textarea-multiline" id="postTextarea" name="demo-multi-string" rows="4"
+                            <textarea class="textarea-multiline" id="postTextarea" name="content" rows="4"
                                 placeholder="Uusi julkaisu" maxlength="140" required></textarea>
 
                             <p>Max 140 merkkiä</p>
@@ -66,10 +66,11 @@
             </div>
         </div>
 
+        <!-- Thymeleaf stuff magic-->
         <div class="center-column">
-            <div class="post-box">
-                <strong>Username</strong>
-                <p>Post content</p>
+            <div th:each="post : ${posts}" class="post-box">
+                <strong th:text="${post.username}"></strong>
+                <p th:text="${post.message}"></p>
             </div>
         </div>
 
