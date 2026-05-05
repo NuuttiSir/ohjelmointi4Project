@@ -22,4 +22,8 @@ public class Post {
     public Long getCreatedAt() {
         return this.createdAt;
     }
+
+    public static String messageBox(String username, String content) {
+        return "<div class='post-box'><strong>" + username + "</strong><p>" + content + "</p></div>";
+    }
 }
