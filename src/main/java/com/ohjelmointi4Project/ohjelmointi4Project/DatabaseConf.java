@@ -77,8 +77,8 @@ public class DatabaseConf {
                         INSERT INTO users (username, email, password) VALUES ('testi3', 'testi3@testi@com', 'testitestitesti');
 
                         INSERT INTO messages (message, user_id, created_at) VALUES ('Moikka kaikille', 1, 1715000000);
-                        INSERT INTO messages (message, user_id, created_at) VALUES ('Moi sullekkin', 1, 1715000000);
-                        INSERT INTO messages (message, user_id, created_at) VALUES ('Mita teette tanaan?', 1, 1715000000);
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Moi sullekkin', 2, 1715000000);
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Mita teette tanaan?', 3, 1715000000);
                                                         """;
                 createStatement.executeUpdate(createMessagesTable);
                 createStatement.executeUpdate(createUsersTable);
@@ -204,5 +204,76 @@ public class DatabaseConf {
             }
         }
         return posts;
+    }
+
+    public boolean changeUsername(String username, String newUsername) throws SQLException {
+        if (!UserHandling.validateUsername(newUsername)) {
+            return false;
+        } else {
+            String changeUsername = """
+                        UPDATE users
+                        SET username = ?
+                        WHERE username = ?
+                    """;
+            try (Connection c = getConnection();
+                    PreparedStatement ps = c.prepareStatement(changeUsername)) {
+                ps.setString(1, newUsername);
+                ps.setString(2, username);
+                ps.executeUpdate();
+                return true;
+            }
+        }
+    }
+
+    public boolean changeEmail(String email, String newEmail) throws SQLException {
+        if (!UserHandling.validateEmail(newEmail)) {
+            return false;
+        } else {
+            String sql = """
+                    UPDATE users
+                    SET email = ?
+                    WHERE email = ?
+                    """;
+
+            try (Connection c = getConnection();
+                    PreparedStatement ps = c.prepareStatement(sql)) {
+                ps.setString(1, newEmail);
+                ps.setString(2, email);
+                ps.executeUpdate();
+                return true;
+            }
+        }
+    }
+
+    public boolean changePassword(String username, String newPassword) throws SQLException {
+        if (!UserHandling.validatePassword(newPassword)) {
+            return false;
+        } else {
+            String changePassword = """
+                    UPDATE users
+                    SET password = ?
+                    WHERE username = ?
+                            """;
+            try (Connection c = getConnection();
+                    PreparedStatement ps = c.prepareStatement(changePassword)) {
+                ps.setString(1, UserHandling.hashPassword(newPassword));
+                ps.setString(2, username);
+                ps.executeUpdate();
+                return true;
+            }
+        }
+    }
+
+    public String getEmailOfUser(String username) throws SQLException {
+        String getEmail = """
+                SELECT email FROM users WHERE username = ?
+                        """;
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(getEmail)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString("email") : null;
+            }
+        }
     }
 }
