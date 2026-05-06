@@ -3,6 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
         integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
         crossorigin="anonymous"></script>
@@ -10,7 +11,7 @@
     <title>SETTINGS</title>
 </head>
 
-<body>
+<body class="settings-page">
     <div class="top-bar">
         <h1>LOGO</h1>
     </div>
@@ -45,7 +46,7 @@
         <div class="center-column">
             <form method="post" action="/changeUsername">
                 <div>
-                    vaihda Käyttäjänimi
+                    Vaihda Käyttäjänimi
                 </div>
                 <input name="newUsername" maxlength="64">
                 <!-- hack to disable submit when pressing Enter -->
@@ -55,7 +56,7 @@
             <div>
                 <form method="post" action="/changeEmail">
                     <div>
-                        vaihda Sähköposti
+                        Vaihda Sähköposti
                     </div>
                     <input name="newEmail" maxlength="128">
                     <!-- hack to disable submit when pressing Enter -->
@@ -66,7 +67,7 @@
             <div>
                 <form method="post" action="/changePassword">
                     <div>
-                        vaihda Salasana
+                        Vaihda Salasana
                     </div>
                     <input name="newPassword" maxlength="32">
                     <!-- hack to disable submit when pressing Enter -->
@@ -75,7 +76,7 @@
                 </form>
             </div>
             <div>
-                Tumma tila
+                <button type="button" onclick="darkMode()">Tumma tila</button>
             </div>
             <div>poista tili</div>
         </div>

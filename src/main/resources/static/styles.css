@@ -1,6 +1,30 @@
 body {
     margin: 0;
     overflow: hidden;
+    padding: 25px;
+    background-color: white;
+    color: black;
+    font-size: 25px;
+}
+
+.darkmode {
+    background-color: black;
+    color: white;
+}
+
+.darkmode .top-bar,
+.darkmode .left-column,
+.darkmode .post-box,
+.darkmode .popup {
+    background-color: #1a1a1a;
+    border-color: #333;
+    color: white;
+}
+
+.darkmode .textarea-multiline {
+    background: #2a2a2a;
+    color: white;
+    border-color: #444;
 }
 
 button {
@@ -78,9 +102,10 @@ button {
     width: 100%;
     max-width: 1200px;
     background: white;
-    border: 0.5px solid white;
+    border: 0.5px solid black;
     border-radius: 12px;
     padding: 16px;
+    margin-left: 0;
 }
 
 
@@ -137,6 +162,7 @@ button {
     visibility: visible;
 }
 
+
 #homeButton {
     /* TODO:
         Change border to none
@@ -157,7 +183,7 @@ button {
         Change that cursor changes to clickable icon
     */
 }
-
+/* TURHAA????
 #homeIcon {
     font-size: 5rem;
 }
@@ -165,7 +191,10 @@ button {
 #profileIcon {
     font-size: 5rem;
 }
+*/
 
+#homeIcon,
+#profileIcon,
 #newPostIcon {
     font-size: 5rem;
 }
@@ -220,4 +249,8 @@ button {
 .ok-msg {
     color: green;
     font-size: 0.9rem;
+}
+
+.settings-page .center-column {
+    margin-left: auto;
 }
