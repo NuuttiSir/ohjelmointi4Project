@@ -115,17 +115,19 @@ public class Ohjelmointi4ProjectApplication {
 
     @PostMapping("/checkLogin")
     public String checkLogin(@RequestParam String username, @RequestParam String password,
-            HttpSession session)
+            HttpSession session, RedirectAttributes redirectAttributes)
             throws SQLException {
         try {
-            if (userHandling.authenticateUser(username, password)) {
-                session.setAttribute("username", username);
-                session.setAttribute("email", db.getEmailOfUser(username));
-                return "redirect:/frontpage";
-            } else {
-                return "redirect:/login";
-            }
+            userHandling.authenticateUser(username, password);
+            session.setAttribute("username", username);
+            session.setAttribute("email", db.getEmailOfUser(username));
+            return "redirect:/frontpage";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("prevUsername", username);
+            return "redirect:/login";
         } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/login";
         }
     }

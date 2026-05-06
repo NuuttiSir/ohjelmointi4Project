@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
-<body class ="login-page">
+<body class="login-page">
     <div class="top-bar">
         <h1>LOGO</h1>
     </div>
@@ -18,8 +18,9 @@
     </div>
 
     <div class="center-column">
+        <p th:if="${error}" th:text="${error}" class="error-message"></p>
         <form method="post" action="/checkLogin">
-            <input name="username" placeholder="Käyttäjänimi" maxlength="64">
+            <input name="username" placeholder="Käyttäjänimi" maxlength="64" th:text="${prevUsername}">
             <input name="password" type="password" placeholder="Salasana" maxlength="32">
             <button type="submit" class="submit">Kirjaudu</button>
             <button type="button" onclick="window.location.href='signup'">Rekisteröidy</button>
