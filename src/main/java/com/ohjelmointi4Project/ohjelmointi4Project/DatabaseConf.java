@@ -70,8 +70,19 @@ public class DatabaseConf {
                         )
                         """;
 
+                // Testi salikset ei oo hahsed mutta ei jaksa atm miettia ei tarkea asia
+                String makeTestData = """
+                        INSERT INTO users (username, email, password) VALUES ('testi', 'testi@testi@com', '123456789');
+                        INSERT INTO users (username, email, password) VALUES ('testi2', 'testi2@testi@com', '987654321');
+                        INSERT INTO users (username, email, password) VALUES ('testi3', 'testi3@testi@com', 'testitestitesti');
+
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Moikka kaikille', 1, 1715000000);
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Moi sullekkin', 1, 1715000000);
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Mita teette tanaan?', 1, 1715000000);
+                                                        """;
                 createStatement.executeUpdate(createMessagesTable);
                 createStatement.executeUpdate(createUsersTable);
+                createStatement.executeUpdate(makeTestData);
             }
         } else {
             System.out.println("Database already exists at: " + dbPath);

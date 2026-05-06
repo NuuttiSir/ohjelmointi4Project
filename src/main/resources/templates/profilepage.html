@@ -44,9 +44,11 @@
         </div>
         <div class="center-column">
             <div>
-                profilename
+                <h1 th:text="${username}"></h1>
             </div>
-            <div>your posts</div>
+            <div>
+                <h2>Sinun postaukset</h2>
+            </div>
             <div th:each="userPost : ${userPosts}" class="post-box">
                 <strong th:text="${userPost.username}"></strong>
                 <p th:text="${userPost.message}"></p>

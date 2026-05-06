@@ -61,7 +61,11 @@ public class Ohjelmointi4ProjectApplication {
     @GetMapping("/profilepage")
     public String getProfilePage(HttpSession session, Model model) throws SQLException {
         List<Post> usersPosts = db.getAllPostsFromUser((String) session.getAttribute("username"));
+        String username = (String) session.getAttribute("username");
+
         model.addAttribute("userPosts", usersPosts);
+        model.addAttribute("username", username);
+
         return "profilepage.html";
     }
 
