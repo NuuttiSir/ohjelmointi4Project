@@ -103,7 +103,7 @@ public class Ohjelmointi4ProjectApplication {
             session.setAttribute("email", email);
             return "redirect:/frontpage";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again")
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/signup";
         }
     }
