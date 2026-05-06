@@ -43,20 +43,40 @@
             </div>
         </div>
         <div class="center-column">
+            <form method="post" action="/changeUsername">
+                <div>
+                    vaihda Käyttäjänimi
+                </div>
+                <input name="newUsername" maxlength="64">
+                <!-- hack to disable submit when pressing Enter -->
+                <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
+                <button type="submit">Submit</button>
+            </form>
             <div>
-                vaihda profiilinimi
+                <form method="post" action="/changeEmail">
+                    <div>
+                        vaihda Sähköposti
+                    </div>
+                    <input name="newEmail" maxlength="128">
+                    <!-- hack to disable submit when pressing Enter -->
+                    <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
             <div>
-                vaihda sähköposti
-            </div>
-            <div>
-                vaihda salasana
+                <form method="post" action="/changePassword">
+                    <div>
+                        vaihda Salasana
+                    </div>
+                    <input name="newPassword" maxlength="32">
+                    <!-- hack to disable submit when pressing Enter -->
+                    <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
+                    <button type="submit">Submit</button>
+                </form>
             </div>
             <div>
                 Tumma tila
             </div>
-            <div>
-                poista tili
-            </div>
+            <div>poista tili</div>
         </div>
 </body>

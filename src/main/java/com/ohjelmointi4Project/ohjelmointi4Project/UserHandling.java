@@ -35,7 +35,28 @@ public class UserHandling {
         }
     }
 
-    public String hashPassword(String password) {
+    public static boolean validateUsername(String username) {
+        if (username == null || username.isBlank() || username.length() > 64) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean validateEmail(String email) {
+        if (email == null || email.isBlank() || email.length() > 128 || !email.contains("@")) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean validatePassword(String password) {
+        if (password == null || password.length() < 8) {
+            return false;
+        }
+        return true;
+    }
+
+    public static String hashPassword(String password) {
         return Crypt.crypt(password);
     }
 
@@ -53,24 +74,8 @@ public class UserHandling {
         db.insertUser(username, hash, email);
     }
 
-    // public void login(String username, String password) throws SQLException {
-    // validateUserInfo(username, password);
-
-    // if (db.usernameExists(username)) {
-    // throw new IllegalArgumentException("Username already exits");
-    // }
-    // String hash = hashPassword(password);
-    // // TODO: Get db password hash and compare
-    // if (hash.equals(db.getUsernamePasswordHash())) {
-    // session.setAttribute("username", username);
-    // redirectTo /
-    // } else {
-    // // TODO: error handling
-    // }
-    // }
-
     public boolean authenticateUser(String username, String password) throws SQLException {
-        if (username == null || password == null)
+        if (username == null || password == null || username.isBlank() || password.isBlank())
             return false;
 
         String storedHash = db.getPasswordHashByUsername(username);

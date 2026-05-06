@@ -18,9 +18,11 @@
     </div>
 
     <div class="center-column">
+        <!-- Error -->
+        <p th:if="${error}" th:text="${error}" class="error-message"></p>
         <form method="post" action="/checkSignup">
-            <input name="username" placeholder="Käyttäjänimi" maxlength="64">
-            <input name="email" placeholder="Sähköposti" maxlength="128">
+            <input name="username" placeholder="Käyttäjänimi" maxlength="64" th:value="${prevUsername}">
+            <input name="email" placeholder="Sähköposti" maxlength="128" th:value="${prevEmail}">
             <input name="password" type="password" placeholder="Salasana" maxlength="32">
             <button type="submit" class="submit">Rekisteröidy</button>
         </form>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -82,7 +83,7 @@ public class Ohjelmointi4ProjectApplication {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "login.html";
+        return "redirect:/login";
     }
 
     @GetMapping("/login")
@@ -95,29 +96,90 @@ public class Ohjelmointi4ProjectApplication {
             @RequestParam String username,
             @RequestParam String email,
             @RequestParam String password,
-            HttpSession session) throws SQLException {
-
+            HttpSession session, RedirectAttributes redirectAttributes) throws SQLException {
         try {
             userHandling.signup(username, email, password);
             session.setAttribute("username", username);
+            session.setAttribute("email", email);
             return "redirect:/frontpage";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("prevUsername", username);
+            redirectAttributes.addFlashAttribute("prevEmail", email);
+            return "redirect:/signup";
         } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/signup";
         }
     }
 
     @PostMapping("/checkLogin")
-    public String checkLogin(@RequestParam String username, @RequestParam String password, HttpSession session)
+    public String checkLogin(@RequestParam String username, @RequestParam String password,
+            HttpSession session, RedirectAttributes redirectAttributes)
             throws SQLException {
         try {
             if (userHandling.authenticateUser(username, password)) {
                 session.setAttribute("username", username);
+                session.setAttribute("email", db.getEmailOfUser(username));
                 return "redirect:/frontpage";
             } else {
+                redirectAttributes.addFlashAttribute("error", "Username or Password is wrong");
                 return "redirect:/login";
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("prevUsername", username);
             return "redirect:/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
+            return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/changeUsername")
+    public String changeUsername(@RequestParam String newUsername, HttpSession session) {
+        try {
+            if (db.changeUsername((String) session.getAttribute("username"), newUsername)) {
+                session.setAttribute("username", newUsername);
+                return "redirect:/settingspage";
+            } else {
+                return "redirect:/settingspage";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/settingspage";
+        }
+    }
+
+    @PostMapping("/changeEmail")
+    public String changeEmail(@RequestParam String newEmail, HttpSession session) {
+        try {
+            String currentEmail = (String) session.getAttribute("email");
+            System.out.println(currentEmail);
+            if (currentEmail != null && db.changeEmail(currentEmail, newEmail)) {
+                session.setAttribute("email", newEmail);
+                return "redirect:/settingspage";
+            } else {
+                return "redirect:/settingspage";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/settingspage";
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam String newPassword, HttpSession session) {
+        try {
+            String username = (String) session.getAttribute("username");
+            if (username != null && db.changePassword(username, newPassword)) {
+                return "redirect:/settingspage";
+            } else {
+                return "redirect:/settingspage";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/settingspage";
         }
     }
 }
