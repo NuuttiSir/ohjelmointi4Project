@@ -18,7 +18,7 @@
     <div class="columns">
         <div class="left-column">
             <div class="nav-icons-top">
-                <a href="/">
+                <a href="/frontpage">
                     <button type="button" class="homeButton">
                         <i class="bi bi-house-door-fill" id="homeIcon"></i>
                     </button>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="nav-icons-bottom">
-                <a href="settingspage.html">
+                <a href="settingspage">
                     <button type="button" class="settingsButton">
                         <i class="bi bi-gear-fill" id="settingsIcon"></i>
                     </button>
@@ -74,37 +74,11 @@
             </div>
         </div>
 
-        <!-- JULKAISUT DEMO
-        <div class="center-column">
-            <div class="text-input">
-                <div class="demo-tekstilaatikko">
-                    <textarea class="textarea-multiline" id="demo-multi-string" rows="3" placeholder="Text"
-                        name="demo-multi-string" maxlength="140">
-                    </textarea>
-                </div>
-            </div>
-            <div class="feed">
-                <div id="preview"></div>
-            </div>
-        </div>
-    -->
-
         <script>
             function toggleNewPost() {
                 const popup = document.getElementById('newPostPopup');
                 popup.classList.toggle('open');
             }
-
-            // function submitPost() {
-            //     const text = document.getElementById('postTextarea').value.trim();
-            //     if (text === '') return;
-
-            //     document.querySelector('.center-column').insertAdjacentHTML('afterbegin',
-            //     '<div class="post-box"><strong>Username</strong><p>' + text + '</p></div>');
-
-            //     document.getElementById('postTextarea').value = '';
-            //     toggleNewPost();
-            // }
         </script>
 </body>
 

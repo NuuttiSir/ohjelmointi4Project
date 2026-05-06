@@ -31,6 +31,11 @@ public class Ohjelmointi4ProjectApplication {
     }
 
     @GetMapping("/")
+    public String root() {
+        return "redirect:/login";
+    }
+
+    @GetMapping("/frontpage")
     public String frontPage(Model model) throws SQLException {
         List<Post> posts = db.getAllPosts();
         model.addAttribute("posts", posts);
@@ -46,28 +51,21 @@ public class Ohjelmointi4ProjectApplication {
         }
         try {
             db.insertMessage(content, username);
-            return "<div class='post-box'><strong>" + username + "</strong><p>" + content + "</p></div>";
+            // TODO: lisaa like ja comment iconit
+            return Post.messageBox(username, content);
         } catch (SQLException e) {
             return "DB error";
         }
     }
 
-    // @PostMapping("/preview")
-    // @ResponseBody
-    // public String inputtedTextToShow(@RequestParam(value = "demo-multi-string",
-    // defaultValue = "") String text,
-    // String username) {
-    // try {
-    // db.insertMessage(text, username);
-    // } catch (SQLException e) {
-    // e.printStackTrace();
-    // }
-    // return "<div class=\"post-box\"><strong>" + username + "</strong><p>" + text
-    // + "</p></div>";
-    // }
-
     @GetMapping("/profilepage")
-    public String getProfilePage() {
+    public String getProfilePage(HttpSession session, Model model) throws SQLException {
+        List<Post> usersPosts = db.getAllPostsFromUser((String) session.getAttribute("username"));
+        String username = (String) session.getAttribute("username");
+
+        model.addAttribute("userPosts", usersPosts);
+        model.addAttribute("username", username);
+
         return "profilepage.html";
     }
 
@@ -96,11 +94,13 @@ public class Ohjelmointi4ProjectApplication {
     public String checkSignup(
             @RequestParam String username,
             @RequestParam String email,
-            @RequestParam String password) throws SQLException {
+            @RequestParam String password,
+            HttpSession session) throws SQLException {
 
         try {
             userHandling.signup(username, email, password);
-            return "redirect:/";
+            session.setAttribute("username", username);
+            return "redirect:/frontpage";
         } catch (Exception e) {
             return "redirect:/signup";
         }
@@ -112,7 +112,7 @@ public class Ohjelmointi4ProjectApplication {
         try {
             if (userHandling.authenticateUser(username, password)) {
                 session.setAttribute("username", username);
-                return "redirect:/";
+                return "redirect:/frontpage";
             } else {
                 return "redirect:/login";
             }

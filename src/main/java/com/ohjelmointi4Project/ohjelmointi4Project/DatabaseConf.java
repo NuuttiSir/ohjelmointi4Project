@@ -70,8 +70,19 @@ public class DatabaseConf {
                         )
                         """;
 
+                // Testi salikset ei oo hahsed mutta ei jaksa atm miettia ei tarkea asia
+                String makeTestData = """
+                        INSERT INTO users (username, email, password) VALUES ('testi', 'testi@testi@com', '123456789');
+                        INSERT INTO users (username, email, password) VALUES ('testi2', 'testi2@testi@com', '987654321');
+                        INSERT INTO users (username, email, password) VALUES ('testi3', 'testi3@testi@com', 'testitestitesti');
+
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Moikka kaikille', 1, 1715000000);
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Moi sullekkin', 1, 1715000000);
+                        INSERT INTO messages (message, user_id, created_at) VALUES ('Mita teette tanaan?', 1, 1715000000);
+                                                        """;
                 createStatement.executeUpdate(createMessagesTable);
                 createStatement.executeUpdate(createUsersTable);
+                createStatement.executeUpdate(makeTestData);
             }
         } else {
             System.out.println("Database already exists at: " + dbPath);
@@ -82,7 +93,6 @@ public class DatabaseConf {
         int user_id = 0;
         long now = Instant.now().toEpochMilli();
 
-        // TODO: Pitaa loytaa username user id yhteys ja lisata user_id
         String findUserID = """
                     SELECT id FROM users WHERE username = ?
                 """;
@@ -171,6 +181,26 @@ public class DatabaseConf {
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 posts.add(new Post(rs.getString("username"), rs.getString("message"), rs.getLong("created_at")));
+            }
+        }
+        return posts;
+    }
+
+    public List<Post> getAllPostsFromUser(String username) throws SQLException {
+        String sql = """
+                SELECT messages.id, messages.message, messages.created_at, users.username FROM messages
+                JOIN users ON messages.user_id = users.id
+                WHERE users.username = ?
+                ORDER BY messages.created_at DESC
+                """;
+        List<Post> posts = new ArrayList<>();
+        try (Connection c = getConnection();
+                PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    posts.add(new Post(rs.getString("username"), rs.getString("message"), rs.getLong("created_at")));
+                }
             }
         }
         return posts;
