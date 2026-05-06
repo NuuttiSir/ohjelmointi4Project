@@ -102,6 +102,11 @@ public class Ohjelmointi4ProjectApplication {
             session.setAttribute("username", username);
             session.setAttribute("email", email);
             return "redirect:/frontpage";
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("prevUsername", username);
+            redirectAttributes.addFlashAttribute("prevEmail", email);
+            return "redirect:/signup";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/signup";

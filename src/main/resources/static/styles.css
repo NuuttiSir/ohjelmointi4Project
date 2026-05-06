@@ -95,7 +95,7 @@ button {
     background: white;
     border-radius: 12px;
     padding: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     z-index: 200;
     display: flex;
     flex-direction: column;
@@ -210,4 +210,14 @@ button {
 .signup-page form button {
     width: 100%;
     box-sizing: border-box;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+}
+
+.ok-msg {
+    color: green;
+    font-size: 0.9rem;
 }
