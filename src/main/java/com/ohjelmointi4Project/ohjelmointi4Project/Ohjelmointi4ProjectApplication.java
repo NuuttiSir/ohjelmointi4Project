@@ -118,10 +118,14 @@ public class Ohjelmointi4ProjectApplication {
             HttpSession session, RedirectAttributes redirectAttributes)
             throws SQLException {
         try {
-            userHandling.authenticateUser(username, password);
-            session.setAttribute("username", username);
-            session.setAttribute("email", db.getEmailOfUser(username));
-            return "redirect:/frontpage";
+            if (userHandling.authenticateUser(username, password)) {
+                session.setAttribute("username", username);
+                session.setAttribute("email", db.getEmailOfUser(username));
+                return "redirect:/frontpage";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Username or Password is wrong");
+                return "redirect:/login";
+            }
         } catch (IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             redirectAttributes.addFlashAttribute("prevUsername", username);

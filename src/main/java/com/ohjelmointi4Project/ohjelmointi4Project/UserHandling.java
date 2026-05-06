@@ -75,7 +75,7 @@ public class UserHandling {
     }
 
     public boolean authenticateUser(String username, String password) throws SQLException {
-        if (username == null || password == null)
+        if (username == null || password == null || username.isBlank() || password.isBlank())
             return false;
 
         String storedHash = db.getPasswordHashByUsername(username);
