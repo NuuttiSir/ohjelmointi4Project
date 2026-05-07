@@ -183,15 +183,6 @@ button {
         Change that cursor changes to clickable icon
     */
 }
-/* TURHAA????
-#homeIcon {
-    font-size: 5rem;
-}
-
-#profileIcon {
-    font-size: 5rem;
-}
-*/
 
 #homeIcon,
 #profileIcon,
@@ -251,6 +242,11 @@ button {
     font-size: 0.9rem;
 }
 
+.profile-page .center-column,
 .settings-page .center-column {
     margin-left: auto;
+}
+
+.thumbUpButton {
+    
 }

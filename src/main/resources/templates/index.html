@@ -13,7 +13,7 @@
 
 <body>
     <div class="top-bar">
-        <h1>LOGO</h1>
+        <h1><i class="bi bi-terminal" style="font-size: 2em;"></i></h1>
     </div>
 
     <div class="columns">
@@ -72,7 +72,12 @@
             <div th:each="post : ${posts}" class="post-box">
                 <strong th:text="${post.username}"></strong>
                 <p th:text="${post.message}"></p>
-                <i class="bi bi-hand-thumbs-up"></i>
+                
+                <div class="thumbUpButton" type="button">
+                    <button class="button">
+                    <i class="bi bi-hand-thumbs-up"></i>
+                    </button>
+                </div>
             </div>
         </div>
 </body>
