@@ -47,6 +47,7 @@
         <div class="center-column">
             <div class="content-box">
                 <p th:if="${error}" th:text="${error}" class="error-message"></p>
+                <p th:if="${ok}" th:text="${ok}" class="ok-message"></p>
                 <!-- TODO: BIGGER FIELD -->
                 <form method="post" action="/changeUsername">
                     <div>
