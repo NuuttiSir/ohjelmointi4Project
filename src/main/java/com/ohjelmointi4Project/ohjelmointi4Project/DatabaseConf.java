@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 
 //TODO: en diggaa etta database nimi on databaseconf vois muuttaa interfaceks jos se olis oikee tapa. pitaa tsiigaa
+//TODO: SHOULD MAYBE USE USERID AND NOT USERNAME BUT WHATEVER SHIT ASS
 @Component
 public class DatabaseConf {
     @Autowired
@@ -177,6 +178,7 @@ public class DatabaseConf {
         }
     }
 
+    // TODO: IF MANY CHANGE TO LOAD MAYBE FIRST 50 IDFK
     public List<Post> getAllPosts() throws SQLException {
         String sql = """
                 SELECT messages.id, messages.message, messages.created_at, users.username FROM messages
@@ -193,6 +195,7 @@ public class DatabaseConf {
         return posts;
     }
 
+    // TODO: IF MANY CHANGE TO LOAD MAYBE FIRST 20-30 IDFK
     public List<Post> getAllPostsFromUser(String username) throws SQLException {
         String sql = """
                 SELECT messages.id, messages.message, messages.created_at, users.username FROM messages

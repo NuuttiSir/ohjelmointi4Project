@@ -20,6 +20,7 @@
 
     <div class="center-column">
         <p th:if="${error}" th:text="${error}" class="error-message"></p>
+        <!-- TODO: BIGGER FIELDS AND BUTTONS -->
         <form method="post" action="/checkLogin">
             <input name="username" placeholder="Käyttäjänimi" maxlength="64" th:text="${prevUsername}">
             <input name="password" type="password" placeholder="Salasana" maxlength="32">

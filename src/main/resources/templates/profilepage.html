@@ -44,9 +44,8 @@
                 </a>
             </div>
         </div>
-        
+
         <div class="center-column">
-<<<<<<< Updated upstream
             <div class="content-box">
                 <div class="content-heading">
                     <h1 th:text="${username}"></h1>
@@ -58,23 +57,7 @@
                     <strong th:text="${userPost.username}"></strong>
                     <p th:text="${userPost.message}"></p>
                     <i class="bi bi-hand-thumbs-up"></i>
-=======
-            <div>
-                <h1 th:text="${username}"></h1>
-            </div>
-            <div>
-                <h2>Sinun postaukset</h2>
-            </div>
-            <div th:each="userPost : ${userPosts}" class="post-box">
-                <strong th:text="${userPost.username}"></strong>
-                <p th:text="${userPost.message}"></p>
-                <div class="thumbUpButton" type="button">
-                    <button class="button">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                    </button>
                 </div>
->>>>>>> Stashed changes
             </div>
         </div>
-    </div>
 </body>
