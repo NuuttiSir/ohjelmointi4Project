@@ -13,8 +13,9 @@
 
 <body class="settings-page">
     <div class="top-bar">
-        <h1>LOGO</h1>
+        <h1><i class="bi bi-terminal" style="font-size: 2em;"></i></h1>
     </div>
+
     <div class="columns">
         <div class="left-column">
             <div class="nav-icons-top">
@@ -44,40 +45,44 @@
             </div>
         </div>
         <div class="center-column">
+            <div class="content-box">
             <form method="post" action="/changeUsername">
                 <div>
                     Vaihda Käyttäjänimi
                 </div>
-                <input name="newUsername" maxlength="64">
-                <!-- hack to disable submit when pressing Enter -->
-                <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
-                <button type="submit">Submit</button>
+                <div class="input-row">
+                    <input name="newUsername" maxlength="64">
+                    <!-- hack to disable submit when pressing Enter -->
+                    <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
+                    <button type="submit">Submit</button>
+                </div>
             </form>
-            <div>
-                <form method="post" action="/changeEmail">
-                    <div>
-                        Vaihda Sähköposti
-                    </div>
+            <form method="post" action="/changeEmail">
+                <div>
+                    Vaihda Sähköposti
+                </div>
+                <div class="input-row">
                     <input name="newEmail" maxlength="128">
                     <!-- hack to disable submit when pressing Enter -->
                     <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
                     <button type="submit">Submit</button>
-                </form>
-            </div>
-            <div>
-                <form method="post" action="/changePassword">
-                    <div>
-                        Vaihda Salasana
-                    </div>
+                </div>
+            </form>
+            <form method="post" action="/changePassword">
+                <div>
+                    Vaihda Salasana
+                </div>
+                <div class="input-row">
                     <input name="newPassword" maxlength="32">
                     <!-- hack to disable submit when pressing Enter -->
                     <button type="submit" disabled style="display: none;" aria-hidden="true"></button>
                     <button type="submit">Submit</button>
+                    </div>
                 </form>
-            </div>
-            <div>
+            <div class="content-heading">
                 <button type="button" onclick="darkMode()">Tumma tila</button>
             </div>
-            <div>poista tili</div>
+            <div class="content-heading">Poista tili</div>
         </div>
+    </div>
 </body>

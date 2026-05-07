@@ -1,10 +1,10 @@
 body {
     margin: 0;
-    overflow: hidden;
-    padding: 25px;
+    padding: 0;
     background-color: white;
     color: black;
     font-size: 25px;
+    overflow: hidden;
 }
 
 .darkmode {
@@ -48,6 +48,7 @@ button {
     align-items: center;
     justify-content: center;
     z-index: 100;
+    padding-right: 30px;
 }
 
 .left-column {
@@ -85,27 +86,29 @@ button {
 }
 
 .center-column {
-    /* offset exactly the sidebar width */
-    margin-left: 120px;
-    padding-top: 160px;
-    padding-left: 20px;
-    flex: 1;
-    overflow-y: auto;
+    position: fixed;
+    left: 120px;
+    top: 160px;
+    right: 0;
+    bottom: 0;
+    padding: 20px 40px;
     /* scrollable feed */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
 }
 
 .post-box {
-    width: 100%;
-    max-width: 1200px;
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
     background: white;
     border: 0.5px solid black;
     border-radius: 12px;
     padding: 16px;
-    margin-left: 0;
+    box-sizing: border-box;
 }
 
 
@@ -204,16 +207,17 @@ button {
 
 .login-page .center-column,
 .signup-page .center-column {
-    margin-left: 0;
-    padding-top: 160px;
-    width: 100%;
-    min-height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 160px;
+    right: 0;
+    bottom: 0;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: 12px;
-    flex: 1;
 }
 
 .login-page form,
@@ -241,12 +245,58 @@ button {
     color: green;
     font-size: 0.9rem;
 }
-
+/*
 .profile-page .center-column,
 .settings-page .center-column {
-    margin-left: auto;
+    position: fixed;
+    left: 120px;
+    top: 160px;
+    right: 0;
+    bottom: 0;
+    padding: 20px 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+*/
+
+.content-box {
+    width: 600px;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-left: -120px;
 }
 
-.thumbUpButton {
-    
+.content-heading {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.content-box form input {
+    width: 300px;
+    box-sizing: border-box;
+}
+
+.input-row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.input-row input {
+    flex: 1;
 }
