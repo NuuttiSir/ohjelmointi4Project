@@ -165,28 +165,6 @@ button {
     visibility: visible;
 }
 
-
-#homeButton {
-    /* TODO:
-        Change border to none
-        Change that cursor changes to clickable icon
-    */
-}
-
-#profileButton {
-    /* TODO:
-        Change border to none
-        Change that cursor changes to clickable icon
-    */
-}
-
-#settingsButton {
-    /* TODO:
-        Change border to none
-        Change that cursor changes to clickable icon
-    */
-}
-
 #homeIcon,
 #profileIcon,
 #newPostIcon {
@@ -299,4 +277,28 @@ button {
 
 .input-row input {
     flex: 1;
+}
+
+.deleteAcc {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.deleteAcc button {
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    background: red;
+}
+
+.like-btn { 
+    background: none;
+    border: none; 
+    font-size: 1.5rem;  
+    color: gray; 
+}
+
+.like-btn.liked {
+    color: blue;
 }

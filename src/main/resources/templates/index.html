@@ -59,8 +59,8 @@
                         <i class="bi bi-gear-fill" id="settingsIcon"></i>
                     </button>
                 </a>
-                <a href="logout">
-                    <button type="button" class="logoutButton">
+                <a>
+                    <button type="button" onclick="if(confirm('Haluatko varmasti kirjautua ulos?')) window.location.href='/logout'">
                         <i class="bi bi-box-arrow-right" id="logoutIcon"></i>
                     </button>
                 </a>
@@ -72,12 +72,9 @@
             <div th:each="post : ${posts}" class="post-box">
                 <strong th:text="${post.username}"></strong>
                 <p th:text="${post.message}"></p>
-                
-                <div class="thumbUpButton" type="button">
-                    <button class="button">
+                <button class="like-btn" th:data-post-id="${post.username + '_' + post.message}" onclick="toggleLike(this.dataset.postId)">
                     <i class="bi bi-hand-thumbs-up"></i>
-                    </button>
-                </div>
+                </button>
             </div>
         </div>
     </div>
