@@ -241,10 +241,11 @@ button {
     font-size: 0.9rem;
 }
 
-.ok-msg {
+.ok-message {
     color: green;
     font-size: 0.9rem;
 }
+
 /*
 .profile-page .center-column,
 .settings-page .center-column {

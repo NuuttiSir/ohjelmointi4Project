@@ -1,6 +1,7 @@
 package com.ohjelmointi4Project.ohjelmointi4Project;
 
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -47,12 +48,14 @@ public class Ohjelmointi4ProjectApplication {
     @ResponseBody
     public String createPost(@RequestParam("content") String content, HttpSession session) {
         String username = (String) session.getAttribute("username");
+        long now = Instant.now().toEpochMilli();
+
         if (username == null) {
             return "Not logged in";
         }
         try {
-            db.insertMessage(content, username);
-            return Post.messageBox(username, content);
+            db.insertMessage(content, username, now);
+            return Post.messageBox(username, content, now);
         } catch (SQLException e) {
             return "DB error";
         }
@@ -135,52 +138,62 @@ public class Ohjelmointi4ProjectApplication {
         }
     }
 
-    // TODO: Add error messages
     @PostMapping("/changeUsername")
-    public String changeUsername(@RequestParam String newUsername, HttpSession session) {
+    public String changeUsername(@RequestParam String newUsername, HttpSession session,
+            RedirectAttributes redirectAttributes) {
         try {
             if (db.changeUsername((String) session.getAttribute("username"), newUsername)) {
                 session.setAttribute("username", newUsername);
+                redirectAttributes.addFlashAttribute("ok", "Username changed");
                 return "redirect:/settingspage";
             } else {
+                redirectAttributes.addFlashAttribute("error", "Username not valid or is taken");
                 return "redirect:/settingspage";
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/settingspage";
         }
     }
 
-    // TODO: Add error messages
     @PostMapping("/changeEmail")
-    public String changeEmail(@RequestParam String newEmail, HttpSession session) {
+    public String changeEmail(@RequestParam String newEmail, HttpSession session,
+            RedirectAttributes redirectAttributes) {
         try {
+            // Why dowe get current email ike this IDK looks weird :()
             String currentEmail = (String) session.getAttribute("email");
-            System.out.println(currentEmail);
             if (currentEmail != null && db.changeEmail(currentEmail, newEmail)) {
                 session.setAttribute("email", newEmail);
+                redirectAttributes.addFlashAttribute("ok", "Email changed");
                 return "redirect:/settingspage";
             } else {
+                redirectAttributes.addFlashAttribute("error", "Email not valid or is taken");
                 return "redirect:/settingspage";
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/settingspage";
         }
     }
 
-    // TODO: Add error messages
     @PostMapping("/changePassword")
-    public String changePassword(@RequestParam String newPassword, HttpSession session) {
+    public String changePassword(@RequestParam String newPassword, HttpSession session,
+            RedirectAttributes redirectAttributes) {
         try {
+            // Same herte why do we get the current password like this :()
             String username = (String) session.getAttribute("username");
             if (username != null && db.changePassword(username, newPassword)) {
+                redirectAttributes.addFlashAttribute("ok", "Password changed");
                 return "redirect:/settingspage";
             } else {
+                redirectAttributes.addFlashAttribute("error", "Password not valid, remember >8 chars");
                 return "redirect:/settingspage";
             }
         } catch (Exception e) {
             e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/settingspage";
         }
     }
