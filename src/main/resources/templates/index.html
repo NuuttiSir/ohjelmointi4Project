@@ -75,6 +75,12 @@
                 <button class="like-btn" th:data-post-id="${post.username + '_' + post.message}" onclick="toggleLike(this.dataset.postId)">
                     <i class="bi bi-hand-thumbs-up"></i>
                 </button>
+                <small th:text="${post.creationTime}"></small>
+                <div class="thumbUpButton" type="button">
+                    <button class="button">
+                        <i class="bi bi-hand-thumbs-up"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
