@@ -24,6 +24,7 @@ public class Post {
     }
 
     public static String messageBox(String username, String content) {
-        return "<div class='post-box'><strong>" + username + "</strong><p>" + content + "</p></div>";
+        return "<div class='post-box'><strong>" + username + "</strong><p>" + content
+                + "</p><div class='thumbUpButton' type='button'><button class='button'><i class='bi bi-hand-thumbs-up'></i></button></div></div>";
     }
 }

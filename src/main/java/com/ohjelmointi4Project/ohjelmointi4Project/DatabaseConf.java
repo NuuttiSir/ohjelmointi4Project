@@ -40,8 +40,13 @@ public class DatabaseConf {
         return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
     }
 
-    // TODO: Init on every startup so delete previous on starrtup
     public void initDB() throws SQLException {
+        File prevDBFile = new File(dbPath);
+        if (prevDBFile.delete()) {
+            System.out.println("Prev DB file deleted");
+        } else {
+            System.out.println("Prev DB file could not be deleted");
+        }
         File dbFile = new File(dbPath);
         boolean dbExists = dbFile.exists() && !dbFile.isDirectory();
 
@@ -49,13 +54,13 @@ public class DatabaseConf {
             try (Connection dbConn = getConnection();
                     Statement createStatement = dbConn.createStatement()) {
 
-                // TODO: lisaa created_at users tableen as timestamp integer whatever
                 String createUsersTable = """
                         CREATE table users(
                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                        username varchar(64) NOT NULL UNIQUE,
+                                username varchar(64) NOT NULL UNIQUE,
                                 email varchar(128) NOT NULL UNIQUE,
-                                password varchar(128) NOT NULL
+                                password varchar(128) NOT NULL,
+                                created_at INTEGER
                         )
                         """;
                 String createMessagesTable = """
@@ -72,9 +77,9 @@ public class DatabaseConf {
 
                 // Testi salikset ei oo hahsed mutta ei jaksa atm miettia ei tarkea asia
                 String makeTestData = """
-                        INSERT INTO users (username, email, password) VALUES ('testi', 'testi@testi@com', '123456789');
-                        INSERT INTO users (username, email, password) VALUES ('testi2', 'testi2@testi@com', '987654321');
-                        INSERT INTO users (username, email, password) VALUES ('testi3', 'testi3@testi@com', 'testitestitesti');
+                        INSERT INTO users (username, email, password, created_at) VALUES ('testi', 'testi@testi@com', '123456789', 1715000000);
+                        INSERT INTO users (username, email, password, created_at) VALUES ('testi2', 'testi2@testi@com', '987654321', 1715000000);
+                        INSERT INTO users (username, email, password, created_at) VALUES ('testi3', 'testi3@testi@com', 'testitestitesti', 1715000000);
 
                         INSERT INTO messages (message, user_id, created_at) VALUES ('Moikka kaikille', 1, 1715000000);
                         INSERT INTO messages (message, user_id, created_at) VALUES ('Moi sullekkin', 2, 1715000000);
@@ -124,13 +129,15 @@ public class DatabaseConf {
     }
 
     public void insertUser(String username, String password, String email) throws SQLException {
-        String insertUser = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        long now = Instant.now().toEpochMilli();
+        String insertUser = "INSERT INTO users (username, email, password, created_at) VALUES (?, ?, ?, ?)";
         try (Connection dbConn = getConnection()) {
             dbConn.setAutoCommit(false);
             try (PreparedStatement ps = dbConn.prepareStatement(insertUser)) {
                 ps.setString(1, username);
                 ps.setString(2, email);
                 ps.setString(3, password);
+                ps.setLong(4, now);
                 ps.executeUpdate();
             }
             dbConn.commit();
@@ -274,6 +281,17 @@ public class DatabaseConf {
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? rs.getString("email") : null;
             }
+        }
+    }
+
+    public boolean deleteUser(String username) throws SQLException {
+        String deleteUser = """
+                DELETE FROM users WHERE username = ?
+                    """;
+        try (Connection c = getConnection(); PreparedStatement ps = c.prepareStatement(deleteUser)) {
+            ps.setString(1, username);
+            ps.executeUpdate();
+            return true;
         }
     }
 }

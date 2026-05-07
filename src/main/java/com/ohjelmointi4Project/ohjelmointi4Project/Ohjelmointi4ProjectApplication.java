@@ -52,7 +52,6 @@ public class Ohjelmointi4ProjectApplication {
         }
         try {
             db.insertMessage(content, username);
-            // TODO: lisaa like ja comment iconit
             return Post.messageBox(username, content);
         } catch (SQLException e) {
             return "DB error";
@@ -136,6 +135,7 @@ public class Ohjelmointi4ProjectApplication {
         }
     }
 
+    // TODO: Add error messages
     @PostMapping("/changeUsername")
     public String changeUsername(@RequestParam String newUsername, HttpSession session) {
         try {
@@ -151,6 +151,7 @@ public class Ohjelmointi4ProjectApplication {
         }
     }
 
+    // TODO: Add error messages
     @PostMapping("/changeEmail")
     public String changeEmail(@RequestParam String newEmail, HttpSession session) {
         try {
@@ -168,6 +169,7 @@ public class Ohjelmointi4ProjectApplication {
         }
     }
 
+    // TODO: Add error messages
     @PostMapping("/changePassword")
     public String changePassword(@RequestParam String newPassword, HttpSession session) {
         try {
@@ -179,6 +181,23 @@ public class Ohjelmointi4ProjectApplication {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return "redirect:/settingspage";
+        }
+    }
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(HttpSession session, RedirectAttributes redirectAttributes) {
+        try {
+            String username = (String) session.getAttribute("username");
+            if (db.deleteUser(username)) {
+                return "redirect:/login";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
+                return "redirect:/settingspage";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Something went wrong, try again");
             return "redirect:/settingspage";
         }
     }

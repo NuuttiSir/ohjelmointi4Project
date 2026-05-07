@@ -45,7 +45,11 @@
             </div>
         </div>
         <div class="center-column">
+<<<<<<< Updated upstream
             <div class="content-box">
+=======
+            <p th:if="${error}" th:text="${error}" class="error-message"></p>
+>>>>>>> Stashed changes
             <form method="post" action="/changeUsername">
                 <div>
                     Vaihda Käyttäjänimi
@@ -82,7 +86,13 @@
             <div class="content-heading">
                 <button type="button" onclick="darkMode()">Tumma tila</button>
             </div>
+<<<<<<< Updated upstream
             <div class="content-heading">Poista tili</div>
+=======
+            <form method="post" action="/deleteUser">
+                <button type="submit">Poista tili</button>
+            </form>
+>>>>>>> Stashed changes
         </div>
     </div>
 </body>
