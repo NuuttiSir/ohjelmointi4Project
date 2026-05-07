@@ -56,7 +56,6 @@ button {
     top: 160px;
     left: 0;
     width: 72px;
-    /* narrow icon-only sidebar */
     height: calc(100vh - 180px);
     width: 120px;
     background: white;
@@ -92,7 +91,6 @@ button {
     right: 0;
     bottom: 0;
     padding: 20px 40px;
-    /* scrollable feed */
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -111,8 +109,6 @@ button {
     box-sizing: border-box;
 }
 
-
-/* TODO julkaisun linkittäminen */
 .popup {
     visibility: hidden;
     position: fixed;
@@ -130,7 +126,7 @@ button {
     gap: 5px;
 }
 
-.textarea-multiline {
+.popup-textbox {
     width: 100%;
     box-sizing: border-box;
     resize: none;
@@ -177,7 +173,6 @@ button {
 }
 
 #logoutIcon {
-    /* sticks to the bottom */
     margin-top: auto;
     margin-bottom: 4px;
     font-size: 5rem;
@@ -223,23 +218,6 @@ button {
     color: green;
     font-size: 0.9rem;
 }
-
-/*
-.profile-page .center-column,
-.settings-page .center-column {
-    position: fixed;
-    left: 120px;
-    top: 160px;
-    right: 0;
-    bottom: 0;
-    padding: 20px 40px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-*/
 
 .content-box {
     width: 600px;

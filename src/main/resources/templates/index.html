@@ -36,9 +36,12 @@
 
                     <div class="popup" id="newPostPopup">
                         <form method="post" action="/posts">
-                            <textarea class="textarea-multiline" name="content" rows="4" 
+
+                            <textarea class="popup-textbox" name="content" rows="4" 
                                 placeholder="Uusi julkaisu" maxlength="140" required></textarea>
+
                             <p>Max 140 merkkiä</p>
+
                             <div class="button-group">
                                 <button type="button" onclick="toggleNewPost()">Peruuta</button>
                                 <button type="submit">Julkaise</button>
