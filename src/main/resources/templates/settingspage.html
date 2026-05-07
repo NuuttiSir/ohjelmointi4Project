@@ -90,7 +90,9 @@
                 <!-- TODO: MAKE A POPUP TO CONFIRM DELETION -->
                 <!-- TODO: BIGGER BUTTON NADON THE BOTTOM -->
                 <div>
-                    <form method="post" action="/deleteUser">
+                    <!-- Käytetään nyt JavaScriptiä kun ei HTMX <3 onnistunut järkevästi-->
+                    <form method="post" action="/deleteUser"
+                        onsubmit="return confirm('Haluatko varmasti poistaa tilisi?');">
                         <button type="submit">Poista tili</button>
                     </form>
                 </div>
