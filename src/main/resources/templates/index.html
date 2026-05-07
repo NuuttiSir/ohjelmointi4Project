@@ -35,15 +35,10 @@
                     </button>
 
                     <div class="popup" id="newPostPopup">
-                        <form hx-post="/posts" hx-target=".center-column" hx-swap="afterbegin"
-                            hx-on::after-request="if(event.detail.successful){ this.reset(); toggleNewPost(); }">
-
-                            <!-- TODO: Vaihda name johonkin kuvaavampaan tassa ja css filussa -->
-                            <textarea class="textarea-multiline" id="postTextarea" name="content" rows="4"
+                        <form method="post" action="/posts">
+                            <textarea class="textarea-multiline" name="content" rows="4" 
                                 placeholder="Uusi julkaisu" maxlength="140" required></textarea>
-
                             <p>Max 140 merkkiä</p>
-
                             <div class="button-group">
                                 <button type="button" onclick="toggleNewPost()">Peruuta</button>
                                 <button type="submit">Julkaise</button>
@@ -72,15 +67,10 @@
             <div th:each="post : ${posts}" class="post-box">
                 <strong th:text="${post.username}"></strong>
                 <p th:text="${post.message}"></p>
-                <button class="like-btn" th:data-post-id="${post.username + '_' + post.message}" onclick="toggleLike(this.dataset.postId)">
+                <button class="like-button" th:data-post-id="${post.username + '_' + post.message}" onclick="toggleLike(this.dataset.postId)">
                     <i class="bi bi-hand-thumbs-up"></i>
                 </button>
                 <small th:text="${post.creationTime}"></small>
-                <div class="thumbUpButton" type="button">
-                    <button class="button">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </div>

@@ -293,13 +293,13 @@ button {
     background: red;
 }
 
-.like-btn { 
+.like-button { 
     background: none;
     border: none; 
     font-size: 1.5rem;  
     color: gray; 
 }
 
-.like-btn.liked {
+.like-button.liked {
     color: blue;
 }

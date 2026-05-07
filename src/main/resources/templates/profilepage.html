@@ -56,9 +56,10 @@
                 <div th:each="userPost : ${userPosts}" class="post-box">
                     <strong th:text="${userPost.username}"></strong>
                     <p th:text="${userPost.message}"></p>
-                    <button class="like-btn" th:data-post-id="${userPost.username + '_' + userPost.message}" onclick="toggleLike(this.dataset.postId)">
+                    <button class="like-button" th:data-post-id="${userPost.username + '_' + userPost.message}" onclick="toggleLike(this.dataset.postId)">
                         <i class="bi bi-hand-thumbs-up"></i>
                     </button>
+                    <small th:text="${userPost.creationTime}"></small>
                 </div>
             </div>
         </div>

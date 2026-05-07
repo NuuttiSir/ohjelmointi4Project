@@ -14,9 +14,9 @@ if (localStorage.getItem("darkmode") === "true") {
 
 function toggleLike(postId) {
     const button = document.querySelector(`[data-post-id="${postId}"]`);
-    const liked = localStorage.getItem(`liked_${postId}`) === 'true';
     const icon = button.querySelector('i');
-
+    const liked = localStorage.getItem(`liked_${postId}`) === 'true';
+    
     if (liked) {
         localStorage.removeItem(`liked_${postId}`);
         icon.classList.replace('bi-hand-thumbs-up-fill', 'bi-hand-thumbs-up');
