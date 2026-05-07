@@ -72,10 +72,10 @@
             <div th:each="post : ${posts}" class="post-box">
                 <strong th:text="${post.username}"></strong>
                 <p th:text="${post.message}"></p>
-                
+                <small th:text="${post.creationTime}"></small>
                 <div class="thumbUpButton" type="button">
                     <button class="button">
-                    <i class="bi bi-hand-thumbs-up"></i>
+                        <i class="bi bi-hand-thumbs-up"></i>
                     </button>
                 </div>
             </div>

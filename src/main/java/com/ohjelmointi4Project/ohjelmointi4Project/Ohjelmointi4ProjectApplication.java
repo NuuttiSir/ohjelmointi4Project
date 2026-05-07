@@ -1,6 +1,7 @@
 package com.ohjelmointi4Project.ohjelmointi4Project;
 
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -47,12 +48,14 @@ public class Ohjelmointi4ProjectApplication {
     @ResponseBody
     public String createPost(@RequestParam("content") String content, HttpSession session) {
         String username = (String) session.getAttribute("username");
+        long now = Instant.now().toEpochMilli();
+
         if (username == null) {
             return "Not logged in";
         }
         try {
-            db.insertMessage(content, username);
-            return Post.messageBox(username, content);
+            db.insertMessage(content, username, now);
+            return Post.messageBox(username, content, now);
         } catch (SQLException e) {
             return "DB error";
         }

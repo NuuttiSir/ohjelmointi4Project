@@ -41,6 +41,7 @@ public class DatabaseConf {
         return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
     }
 
+    // Rupee vituttaan et aina relaodin aikana database nollaantuu mutta kestetään
     public void initDB() throws SQLException {
         File prevDBFile = new File(dbPath);
         if (prevDBFile.delete()) {
@@ -95,9 +96,8 @@ public class DatabaseConf {
         }
     }
 
-    public void insertMessage(String text, String username) throws SQLException {
+    public void insertMessage(String text, String username, Long now) throws SQLException {
         int user_id = 0;
-        long now = Instant.now().toEpochMilli();
 
         String findUserID = """
                     SELECT id FROM users WHERE username = ?
