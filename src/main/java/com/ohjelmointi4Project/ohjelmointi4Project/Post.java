@@ -23,6 +23,7 @@ public class Post {
         return this.createdAt;
     }
 
+    // TODO: Add when post made DB has created_at sojust convert to normal time
     public static String messageBox(String username, String content) {
         return "<div class='post-box'><strong>" + username + "</strong><p>" + content
                 + "</p><div class='thumbUpButton' type='button'><button class='button'><i class='bi bi-hand-thumbs-up'></i></button></div></div>";

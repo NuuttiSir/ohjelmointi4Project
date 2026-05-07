@@ -78,9 +78,9 @@ public class DatabaseConf {
 
                 // Testi salikset ei oo hahsed mutta ei jaksa atm miettia ei tarkea asia
                 String makeTestData = """
-                        INSERT INTO users (username, email, password, created_at) VALUES ('testi', 'testi@testi@com', '123456789', 1715000000);
-                        INSERT INTO users (username, email, password, created_at) VALUES ('testi2', 'testi2@testi@com', '987654321', 1715000000);
-                        INSERT INTO users (username, email, password, created_at) VALUES ('testi3', 'testi3@testi@com', 'testitestitesti', 1715000000);
+                        INSERT INTO users (username, email, password, created_at) VALUES ('testi', 'testi@testi.com', '123456789', 1715000000);
+                        INSERT INTO users (username, email, password, created_at) VALUES ('testi2', 'testi2@testi.com', '987654321', 1715000000);
+                        INSERT INTO users (username, email, password, created_at) VALUES ('testi3', 'testi3@testi.com', 'testitestitesti', 1715000000);
 
                         INSERT INTO messages (message, user_id, created_at) VALUES ('Moikka kaikille', 1, 1715000000);
                         INSERT INTO messages (message, user_id, created_at) VALUES ('Moi sullekkin', 2, 1715000000);
@@ -217,7 +217,7 @@ public class DatabaseConf {
     }
 
     public boolean changeUsername(String username, String newUsername) throws SQLException {
-        if (!UserHandling.validateUsername(newUsername)) {
+        if (!UserHandling.validateUsername(newUsername) || usernameExists(newUsername)) {
             return false;
         } else {
             String changeUsername = """
@@ -236,7 +236,7 @@ public class DatabaseConf {
     }
 
     public boolean changeEmail(String email, String newEmail) throws SQLException {
-        if (!UserHandling.validateEmail(newEmail)) {
+        if (!UserHandling.validateEmail(newEmail) || emailExists(newEmail)) {
             return false;
         } else {
             String sql = """
