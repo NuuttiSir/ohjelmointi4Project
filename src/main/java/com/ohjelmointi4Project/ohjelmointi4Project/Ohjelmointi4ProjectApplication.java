@@ -45,19 +45,15 @@ public class Ohjelmointi4ProjectApplication {
     }
 
     @PostMapping("/posts")
-    @ResponseBody
     public String createPost(@RequestParam("content") String content, HttpSession session) {
         String username = (String) session.getAttribute("username");
-        long now = Instant.now().toEpochMilli();
+        Long now = Instant.now().toEpochMilli();     
 
-        if (username == null) {
-            return "Not logged in";
-        }
         try {
             db.insertMessage(content, username, now);
-            return Post.messageBox(username, content, now);
+            return "redirect:/frontpage";
         } catch (SQLException e) {
-            return "DB error";
+            return "redirect:/frontpage";
         }
     }
 

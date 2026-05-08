@@ -42,11 +42,13 @@ public class Post {
     }
 
     public static String messageBox(String username, String content, Long createdAt) {
+        String postId = username + "_" + content;
         return "<div class='post-box'>"
-                + "<strong>" + username + "</strong>"
-                + "<p>" + content + "</p>"
-                + "<small>" + getCreationTime(createdAt) + "</small>"
-                + "<div class='thumbUpButton' type='button'><button class='button'>"
-                + "<i class='bi bi-hand-thumbs-up'></i></button></div></div>";
+            + "<strong>" + username + "</strong>"
+            + "<p>" + content + "</p>"
+            + "<button class='like-button' data-post-id='" + postId + "' onclick='toggleLike(this.dataset.postId)'>"
+            + "<i class='bi bi-hand-thumbs-up'></i></button>"
+            + "<small>" + getCreationTime(createdAt) + "</small>"
+            + "</div>";
     }
 }

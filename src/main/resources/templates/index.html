@@ -35,11 +35,9 @@
                     </button>
 
                     <div class="popup" id="newPostPopup">
-                        <form hx-post="/posts" hx-target=".center-column" hx-swap="afterbegin"
-                            hx-on::after-request="if(event.detail.successful){ this.reset(); toggleNewPost(); }">
+                        <form method="post" action="/posts">
 
-                            <!-- TODO: Vaihda name johonkin kuvaavampaan tassa ja css filussa -->
-                            <textarea class="textarea-multiline" id="postTextarea" name="content" rows="4"
+                            <textarea class="popup-textbox" name="content" rows="4" 
                                 placeholder="Uusi julkaisu" maxlength="140" required></textarea>
 
                             <p>Max 140 merkkiä</p>
@@ -59,8 +57,8 @@
                         <i class="bi bi-gear-fill" id="settingsIcon"></i>
                     </button>
                 </a>
-                <a href="logout">
-                    <button type="button" class="logoutButton">
+                <a>
+                    <button type="button" onclick="if(confirm('Haluatko varmasti kirjautua ulos?')) window.location.href='/logout'">
                         <i class="bi bi-box-arrow-right" id="logoutIcon"></i>
                     </button>
                 </a>
@@ -72,12 +70,10 @@
             <div th:each="post : ${posts}" class="post-box">
                 <strong th:text="${post.username}"></strong>
                 <p th:text="${post.message}"></p>
+                <button class="like-button" th:data-post-id="${post.username + '_' + post.message}" onclick="toggleLike(this.dataset.postId)">
+                    <i class="bi bi-hand-thumbs-up"></i>
+                </button>
                 <small th:text="${post.creationTime}"></small>
-                <div class="thumbUpButton" type="button">
-                    <button class="button">
-                        <i class="bi bi-hand-thumbs-up"></i>
-                    </button>
-                </div>
             </div>
         </div>
     </div>

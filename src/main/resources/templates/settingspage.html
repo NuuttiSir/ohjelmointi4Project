@@ -37,13 +37,14 @@
                         <i class="bi bi-gear-fill" id="settingsIcon"></i>
                     </button>
                 </a>
-                <a href="logout">
-                    <button type="button" class="logoutButton">
+                <a>
+                    <button type="button" onclick="if(confirm('Haluatko varmasti kirjautua ulos?')) window.location.href='/logout'">
                         <i class="bi bi-box-arrow-right" id="logoutIcon"></i>
                     </button>
                 </a>
             </div>
         </div>
+        
         <div class="center-column">
             <div class="content-box">
                 <p th:if="${error}" th:text="${error}" class="error-message"></p>
@@ -90,7 +91,7 @@
                 </div>
                 <!-- TODO: MAKE A POPUP TO CONFIRM DELETION -->
                 <!-- TODO: BIGGER BUTTON NADON THE BOTTOM -->
-                <div>
+                <div class="deleteAcc">
                     <!-- Käytetään nyt JavaScriptiä kun ei HTMX <3 onnistunut järkevästi-->
                     <form method="post" action="/deleteUser"
                         onsubmit="return confirm('Haluatko varmasti poistaa tilisi?');">
