@@ -3,13 +3,13 @@ Small social plaform where you can send short messges and see other users messag
 
 # Languages used
 - Java
-- Javasript + HTML + CSS
+- JavaScript + HTML + CSS
 
 # Libraries used
 - Spring Boot   https://spring.io/projects/spring-boot
 - HTMX          https://htmx.org/
 - SQLite        https://sqlite.org/index.html
-- thymeleaf     https://www.thymeleaf.org/
+- Thymeleaf     https://www.thymeleaf.org/
 
 # Running
 To run the server 
