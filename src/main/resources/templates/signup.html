@@ -22,10 +22,12 @@
         <!-- Error -->
         <p th:if="${error}" th:text="${error}" class="error-message"></p>
         <form method="post" action="/checkSignup">
-            <!-- TODO: BIGGER FIELDS AND BUTTONS -->
             <input name="username" placeholder="Käyttäjänimi" maxlength="64" th:value="${prevUsername}">
             <input name="email" placeholder="Sähköposti" maxlength="128" th:value="${prevEmail}">
-            <input name="password" type="password" placeholder="Salasana" maxlength="32">
+            <div style="display: flex; flex-direction: column;">
+                <input name="password" type="password" placeholder="Salasana" maxlength="32">
+                <label for="password" style="font-size: 7px;">Minimissään 8 merkkiä</label>
+            </div>
             <button type="submit" class="submit">Rekisteröidy</button>
         </form>
     </div>

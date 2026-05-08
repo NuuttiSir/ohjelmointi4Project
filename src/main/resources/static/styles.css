@@ -271,11 +271,11 @@ button {
     background: red;
 }
 
-.like-button { 
+.like-button {
     background: none;
-    border: none; 
-    font-size: 1.5rem;  
-    color: gray; 
+    border: none;
+    font-size: 1.5rem;
+    color: gray;
 }
 
 .like-button.liked {
